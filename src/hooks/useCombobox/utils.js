@@ -100,13 +100,15 @@ function useControlledReducer(reducer, initialState, props) {
           inputValue: props.itemToString(props.selectedItem),
         })
       }
+    }
+    });
 
+  useEffect(() => {
       previousSelectedItemRef.current =
         state.selectedItem === previousSelectedItemRef.current
           ? props.selectedItem
           : state.selectedItem
-    }
-  })
+    }, [props.selectedItem, state.selectedItem]);
 
   return [getState(state, props), dispatch]
 }

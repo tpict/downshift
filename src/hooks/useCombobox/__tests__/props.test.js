@@ -871,6 +871,25 @@ describe('props', () => {
         }),
       )
     })
+
+    test("doesn't clobber controlled prop updates", () => {
+      const onStateChange = jest.fn();
+      const stateReducer = changes => changes;
+      const {rerender} = renderCombobox({
+        stateReducer,
+        onStateChange,
+        items,
+        selectedItem: null,
+      });
+
+      rerender({selectedItem: "Neptunium"});
+      expect(onStateChange).toHaveBeenCalledWith(
+        expect.objectContaining({
+          inputValue: "Neptunium",
+          type: stateChangeTypes.ControlledPropUpdatedSelectedItem,
+        }),
+      )
+    })
   })
 
   describe('onInputValueChange', () => {
